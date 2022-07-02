@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Button, TouchableHighlight, TouchableOpacity } from "react-native";
-import { screenNames, stylesCommon } from "../common/common";
+import { screenNames, stylesCommon } from "../../../common/common";
 
 export default function WorkoutTile(props) {
   return (
@@ -10,10 +10,10 @@ export default function WorkoutTile(props) {
     >
       <View style={styles.container}>
         <View style={styles.colContainer}>
-          <Text numberOfLines={1} style={styles.title}>
+          <Text numberOfLines={1} style={[stylesCommon.inter400, styles.title]}>
             {props.title}
           </Text>
-          <Text style={styles.paragraph}>Last time trained: {props.lastTimeDate}</Text>
+          <Text style={[stylesCommon.inter400, styles.paragraph]}>Last time trained: {props.lastTimeDate}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     minWidth: "90%",
-    maxHeight: 100,
+    minHeight: 131,
     marginBottom: 15,
     borderRadius: 10,
     backgroundColor: "#FCF",

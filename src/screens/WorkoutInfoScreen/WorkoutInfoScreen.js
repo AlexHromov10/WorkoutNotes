@@ -1,7 +1,6 @@
 import { Text, View, StyleSheet } from "react-native";
 
 export default function WorkoutInfoScreen({ route, navigation }) {
-  console.log(route);
   return (
     <View style={styles.container}>
       <Text>{route.params.title}</Text>
