@@ -5,8 +5,11 @@ export const screenNames = { WorkoutList: "Workout List", Workout: "Workout" };
 export const storageKeys = { workoutTiles: "workoutTiles" };
 
 export const stylesCommon = StyleSheet.create({
-  inter400: {
-    fontFamily: "Inter_400Regular",
+  font500: {
+    fontFamily: "Ubuntu_500Medium",
+  },
+  font400: {
+    fontFamily: "Ubuntu_400Regular",
   },
   h1: {
     fontSize: 26,

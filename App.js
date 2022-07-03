@@ -1,8 +1,18 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View, Text } from "react-native";
-import { useFonts, Inter_400Regular } from "@expo-google-fonts/inter";
-import { SafeAreaView } from "react-native-safe-area-context";
+import AppLoading from "expo-app-loading";
+import {
+  useFonts,
+  Ubuntu_300Light,
+  Ubuntu_300Light_Italic,
+  Ubuntu_400Regular,
+  Ubuntu_400Regular_Italic,
+  Ubuntu_500Medium,
+  Ubuntu_500Medium_Italic,
+  Ubuntu_700Bold,
+  Ubuntu_700Bold_Italic,
+} from "@expo-google-fonts/ubuntu";
 
 import { screenNames } from "./src/common/common";
 import WorkoutTile from "./src/screens/WorkoutListScreen/components/WorkoutTile";
@@ -13,15 +23,18 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    Inter_400Regular,
+    Ubuntu_300Light,
+    Ubuntu_300Light_Italic,
+    Ubuntu_400Regular,
+    Ubuntu_400Regular_Italic,
+    Ubuntu_500Medium,
+    Ubuntu_500Medium_Italic,
+    Ubuntu_700Bold,
+    Ubuntu_700Bold_Italic,
   });
 
   if (!fontsLoaded) {
-    return (
-      <View>
-        <Text>loading...</Text>
-      </View>
-    );
+    return <AppLoading />;
   } else
     return (
       <NavigationContainer>
@@ -33,7 +46,7 @@ export default function App() {
             headerTintColor: "#000",
 
             headerTitleStyle: {
-              fontFamily: "Inter_400Regular",
+              fontFamily: "Ubuntu_400Regular",
               fontSize: 22,
             },
             headerTitleAlign: "center",

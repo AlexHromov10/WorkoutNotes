@@ -10,10 +10,10 @@ export default function WorkoutTile(props) {
     >
       <View style={styles.container}>
         <View style={styles.colContainer}>
-          <Text numberOfLines={1} style={[stylesCommon.inter400, styles.title]}>
+          <Text numberOfLines={1} style={[stylesCommon.font500, styles.title]}>
             {props.title}
           </Text>
-          <Text style={[stylesCommon.inter400, styles.paragraph]}>Last time trained: {props.lastTimeDate}</Text>
+          <Text style={[stylesCommon.font500, styles.paragraph]}>Last time trained: {props.lastTimeDate}</Text>
         </View>
       </View>
     </TouchableOpacity>
