@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Button, TouchableHighlight, TouchableOpacity } from "react-native";
-import { screenNames, stylesCommon } from "../../../common/common";
+import { colorsCommon, screenNames, stylesCommon } from "../../../common/common";
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function WorkoutTile(props) {
@@ -11,7 +11,7 @@ export default function WorkoutTile(props) {
     >
       <LinearGradient
         // Background Linear Gradient
-        colors={[props.color, "#FFF"]}
+        colors={[colorsCommon[props.colorId], "#FFF"]}
         style={styles.container}
         end={{ x: 1, y: 0 }}
       >

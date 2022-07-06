@@ -9,7 +9,7 @@ export const colorsCommon = {
 
 export const screenNames = { WorkoutList: "Workout List", Workout: "Workout" };
 
-export const storageKeys = { workoutTiles: "workoutTiles" };
+export const storageKeys = { fileName: "workoutInfo" };
 
 export const stylesCommon = StyleSheet.create({
   font500: {

@@ -1,16 +1,45 @@
-import { StyleSheet, ScrollView, Image, View } from "react-native";
+import { StyleSheet, ScrollView, Image, View, Button } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import HeadText from "./components/HeadText/HeadText";
 import WorkoutTile from "./components/WorkoutTile";
-import { colorsCommon } from "../../common/common";
+import { colorsCommon, storageKeys } from "../../common/common";
+import { deleteFile, readFile, writeToFile } from "../../common/fileSystem";
 
 export default function WorkoutList({ navigation }) {
   const [tiles, setTiles] = useState([]);
 
+  useEffect(() => {
+    async function read() {
+      setTiles(JSON.parse(await readFile(storageKeys.fileName)));
+    }
+    read();
+  }, []);
+
+  useEffect(() => {
+    async function write() {
+      await writeToFile(storageKeys.fileName, JSON.stringify(tiles));
+    }
+    write();
+  }, [tiles]);
+
+  const createWorkoutTile = () => {
+    const props = {
+      key: tiles.length,
+      title: "Плечи",
+      lastTimeDate: "21.02.2022",
+      colorId: "2",
+    };
+
+    setTiles([...tiles, props]);
+  };
+
+  const deleteAll = async () => {
+    setTiles([]);
+  };
+
   return (
-    // <SafeAreaView style={{ backgroundColor: "#FFF", display: "flex" }}>
     <View style={{ backgroundColor: "#FFF", display: "flex" }}>
       <Image
         style={{ resizeMode: "cover", position: "absolute", top: 0, left: 0 }}
@@ -18,65 +47,22 @@ export default function WorkoutList({ navigation }) {
       />
       <ScrollView contentContainerStyle={styles.container}>
         <HeadText />
-        <WorkoutTile
-          id="1"
-          title="Плечи"
-          lastTimeDate="21.02.2022"
-          navigate={navigation.navigate}
-          color={colorsCommon[1]}
-        />
-        <WorkoutTile
-          id="1"
-          title="Ноги"
-          lastTimeDate="10.04.2022"
-          navigate={navigation.navigate}
-          color={colorsCommon[2]}
-        />
-        <WorkoutTile
-          id="1"
-          title="Грудь"
-          lastTimeDate="24.02.2022"
-          navigate={navigation.navigate}
-          color={colorsCommon[3]}
-        />
-        <WorkoutTile
-          id="1"
-          title="Руки"
-          lastTimeDate="18.02.2022"
-          navigate={navigation.navigate}
-          color={colorsCommon[4]}
-        />
-        <WorkoutTile
-          id="1"
-          title="Плечи"
-          lastTimeDate="21.02.2022"
-          navigate={navigation.navigate}
-          color={colorsCommon[1]}
-        />
-        <WorkoutTile
-          id="1"
-          title="Ноги"
-          lastTimeDate="10.04.2022"
-          navigate={navigation.navigate}
-          color={colorsCommon[2]}
-        />
-        <WorkoutTile
-          id="1"
-          title="Грудь"
-          lastTimeDate="24.02.2022"
-          navigate={navigation.navigate}
-          color={colorsCommon[3]}
-        />
-        <WorkoutTile
-          id="1"
-          title="Руки"
-          lastTimeDate="18.02.2022"
-          navigate={navigation.navigate}
-          color={colorsCommon[4]}
-        />
+
+        <Button title="Create Some test" onPress={createWorkoutTile} />
+        <Button title="Delete all" onPress={deleteAll} />
+
+        {tiles.map((tile) => (
+          <WorkoutTile
+            key={tile.key}
+            title={tile.title}
+            lastTimeDate={tile.lastTimeDate}
+            colorId={tile.colorId}
+            navigate={navigation.navigate}
+          />
+        ))}
+        {/* <WorkoutTile id="1" title="Плечи" lastTimeDate="21.02.2022" navigate={navigation.navigate} colorId="1" /> */}
       </ScrollView>
     </View>
-    //</SafeAreaView>
   );
 }
 
@@ -90,3 +76,6 @@ const styles = StyleSheet.create({
     minHeight: "100%",
   },
 });
+
+// <SafeAreaView style={{ backgroundColor: "#FFF", display: "flex" }}>
+//</SafeAreaView>
