@@ -16,18 +16,20 @@ export default function HeadText() {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.topText, stylesCommon.font400]}>{text.topText}</Text>
-      <Text style={[styles.botText, stylesCommon.font400]}>{text.botText}</Text>
+      <Text style={[styles.topText, stylesCommon.font500]}>{text.topText}</Text>
+      <Text style={[styles.botText, stylesCommon.font500]}>{text.botText}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { display: "flex", height: 150, marginTop: 50, width: "90%" },
+  container: { display: "flex", height: 150, marginTop: 60, marginBottom: 25, width: "90%" },
   topText: {
-    fontSize: 30,
+    fontSize: 36,
+    color: "#DC5C65",
   },
   botText: {
-    fontSize: 30,
+    fontSize: 36,
+    color: "#DC5C65",
   },
 });

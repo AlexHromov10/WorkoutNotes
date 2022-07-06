@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Button, TouchableHighlight, TouchableOpacity } from "react-native";
 import { screenNames, stylesCommon } from "../../../common/common";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function WorkoutTile(props) {
   return (
@@ -8,28 +9,35 @@ export default function WorkoutTile(props) {
         props.navigate(screenNames.Workout, { title: props.title, lastTimeDate: props.lastTimeDate });
       }}
     >
-      <View style={styles.container}>
+      <LinearGradient
+        // Background Linear Gradient
+        colors={[props.color, "#FFF"]}
+        style={styles.container}
+        end={{ x: 1, y: 0 }}
+      >
         <View style={styles.colContainer}>
           <Text numberOfLines={1} style={[stylesCommon.font500, styles.title]}>
             {props.title}
           </Text>
           <Text style={[stylesCommon.font500, styles.paragraph]}>Last time trained: {props.lastTimeDate}</Text>
         </View>
-      </View>
+      </LinearGradient>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
+  linearGradient: { display: "wrap" },
+
   container: {
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
     minWidth: "90%",
     minHeight: 131,
-    marginBottom: 15,
+    marginBottom: 25,
     borderRadius: 10,
-    backgroundColor: "#FCF",
+    backgroundColor: "transparent",
     padding: 12,
   },
 

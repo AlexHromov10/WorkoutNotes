@@ -1,71 +1,82 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View, Text } from "react-native";
-import AppLoading from "expo-app-loading";
-import {
-  useFonts,
-  Ubuntu_300Light,
-  Ubuntu_300Light_Italic,
-  Ubuntu_400Regular,
-  Ubuntu_400Regular_Italic,
-  Ubuntu_500Medium,
-  Ubuntu_500Medium_Italic,
-  Ubuntu_700Bold,
-  Ubuntu_700Bold_Italic,
-} from "@expo-google-fonts/ubuntu";
+import * as Font from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { useCallback, useEffect, useState } from "react";
+import { Text, View } from "react-native";
 
 import { screenNames } from "./src/common/common";
-import WorkoutTile from "./src/screens/WorkoutListScreen/components/WorkoutTile";
 import WorkoutInfoScreen from "./src/screens/WorkoutInfoScreen/WorkoutInfoScreen";
 import WorkoutList from "./src/screens/WorkoutListScreen/WorkoutListScreen";
 
 const Stack = createNativeStackNavigator();
+const fonts = {
+  Ubuntu_500Medium: require("./assets/fonts/Ubuntu-Medium.ttf"),
+  Ubuntu_400Regular: require("./assets/fonts/Ubuntu-Regular.ttf"),
+};
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    Ubuntu_300Light,
-    Ubuntu_300Light_Italic,
-    Ubuntu_400Regular,
-    Ubuntu_400Regular_Italic,
-    Ubuntu_500Medium,
-    Ubuntu_500Medium_Italic,
-    Ubuntu_700Bold,
-    Ubuntu_700Bold_Italic,
-  });
+  const [fontsAreLoaded, setFontsAreLoaded] = useState(false);
+  SplashScreen.preventAutoHideAsync();
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  } else
-    return (
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: "#F0E6EF",
-            },
-            headerTintColor: "#000",
+  useEffect(() => {
+    async function loadFonts() {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+        await Font.loadAsync({
+          Ubuntu_500Medium: require("./assets/fonts/Ubuntu-Medium.ttf"),
+          Ubuntu_400Regular: require("./assets/fonts/Ubuntu-Regular.ttf"),
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setFontsAreLoaded(true);
+      }
+    }
 
-            headerTitleStyle: {
-              fontFamily: "Ubuntu_400Regular",
-              fontSize: 22,
-            },
-            headerTitleAlign: "center",
+    loadFonts();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsAreLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsAreLoaded]);
+
+  if (!fontsAreLoaded) {
+    return <></>;
+  }
+
+  return (
+    <NavigationContainer onReady={onLayoutRootView}>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: "#F0E6EF",
+          },
+          headerTintColor: "#000",
+
+          headerTitleStyle: {
+            fontFamily: "Ubuntu_500Medium",
+            fontSize: 22,
+          },
+          headerTitleAlign: "center",
+        }}
+      >
+        <Stack.Screen
+          name={screenNames.WorkoutList}
+          component={WorkoutList}
+          options={{
+            title: "Your workosfuts",
+            headerShown: false,
           }}
-        >
-          <Stack.Screen
-            name={screenNames.WorkoutList}
-            component={WorkoutList}
-            options={{
-              title: "Your workosfuts",
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name={screenNames.Workout}
-            component={WorkoutInfoScreen}
-            options={({ route }) => ({ title: route.params.title })}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
+        />
+        <Stack.Screen
+          name={screenNames.Workout}
+          component={WorkoutInfoScreen}
+          options={({ route }) => ({ title: route.params.title })}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }

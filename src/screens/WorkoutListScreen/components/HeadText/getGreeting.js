@@ -7,7 +7,7 @@ export function getGreeting(locale, hours) {
 const getTimeGreeting = (locale, hours) => {
   const index = getTimeIndex(hours);
 
-  if (locale === "en_US") {
+  if (locale !== "ru_RU") {
     return phrases.timeGreeting_en_US[index];
   } else {
     return phrases.timeGreeting_ru_RU[index];
@@ -17,7 +17,7 @@ const getTimeGreeting = (locale, hours) => {
 const getPhrase = (locale) => {
   const index = Math.floor(Math.random() * phrases.motivation_en_US.length);
 
-  if (locale === "en_US") {
+  if (locale !== "ru_RU") {
     return phrases.motivation_en_US[index];
   } else {
     return phrases.motivation_ru_RU[index];

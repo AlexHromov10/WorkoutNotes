@@ -1,5 +1,5 @@
-const motivation_en_US = ["Let's train!", "LET'S WORKOUT GODDAMNT!", "Lucky training!"];
-const motivation_ru_RU = ["Давай тренироваться!", "ДАВАЙ РАБОТАТЬ ЧЕРТ ПОДЕРИ!", "Удачной тренировки!"];
+const motivation_en_US = ["Let's train!", "Let's workout!", "Lucky training!"];
+const motivation_ru_RU = ["Давай тренироваться!", "Давай работай!", "Удачной тренировки!"];
 
 const timeGreeting_en_US = ["Good morning,", "Good day,", "Good evening,", "Good night,"];
 const timeGreeting_ru_RU = ["Доброе утро,", "Добрый день,", "Доброго вечера,", "Доброй ночи,"];
