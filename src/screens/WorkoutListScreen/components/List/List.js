@@ -5,7 +5,7 @@ import Tile from "../Tile/Tile";
 import { storageKeys } from "../../../../common/common";
 import { readFile, writeToFile } from "../../../../common/fileSystem";
 
-export default function List(navigation) {
+export default function List({ navigation }) {
   const [tiles, setTiles] = useState([]);
 
   useEffect(() => {

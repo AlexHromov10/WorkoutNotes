@@ -3,6 +3,7 @@ import { colorsCommon, screenNames, stylesCommon } from "../../../../common/comm
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function Tile(props) {
+  console.log(props.navigate);
   return (
     <TouchableOpacity
       onPress={() => {
