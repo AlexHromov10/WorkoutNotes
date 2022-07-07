@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Button, TouchableHighlight, TouchableOpacity } from "react-native";
-import { colorsCommon, screenNames, stylesCommon } from "../../../common/common";
+import { colorsCommon, screenNames, stylesCommon } from "../../../../common/common";
 import { LinearGradient } from "expo-linear-gradient";
 
-export default function WorkoutTile(props) {
+export default function Tile(props) {
   return (
     <TouchableOpacity
       onPress={() => {
