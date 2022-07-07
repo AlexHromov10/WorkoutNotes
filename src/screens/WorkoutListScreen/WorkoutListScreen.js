@@ -4,14 +4,41 @@ import { useEffect, useState } from "react";
 
 import { HeadText, greeting } from "./components/HeadText/HeadText";
 import List from "./components/List/List";
+import CreateTileModal from "./components/CreateTileModal/CreateTileModal";
+import { readFile, writeToFile } from "../../common/fileSystem";
+import { storageKeys } from "../../common/common";
 
 export default function WorkoutList({ navigation }) {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [tiles, setTiles] = useState([]);
   const [headText, setHeadText] = useState("");
+  const [key, setKey] = useState(0);
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
+    async () => setTiles(JSON.parse(await readFile(storageKeys.fileName)));
     setHeadText(greeting());
   }, []);
+
+  useEffect(() => {
+    async () => await writeToFile(storageKeys.fileName, JSON.stringify(tiles));
+  }, [tiles]);
+
+  const createWorkoutTile = (titleValue, date) => {
+    const newTile = {
+      title: titleValue,
+      lastTimeDate: date.toString(),
+      id: key,
+      colorId: key % 4,
+    };
+    setKey(key.valueOf() + 1);
+
+    setTiles([...tiles, newTile]);
+  };
+
+  const deleteAll = async () => {
+    setTiles([]);
+  };
 
   return (
     <View style={{ backgroundColor: "#FFF", display: "flex" }}>
@@ -25,34 +52,27 @@ export default function WorkoutList({ navigation }) {
         }}
         source={require("../../../assets/WorkoutListAssets/BG.png")}
       />
-      <ScrollView contentContainerStyle={[styles.container, { opacity: modalVisible ? 0.2 : 1 }]}>
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Hello World!</Text>
-              <Pressable style={styles.button} onPress={() => setModalVisible(false)}>
-                <Text>Create</Text>
-              </Pressable>
-            </View>
-          </View>
-        </Modal>
+      <ScrollView
+        contentContainerStyle={[styles.container, { opacity: modalVisible ? 0.2 : 1 }]}
+        onPress={() => {
+          console.log("PRESS");
+        }}
+      >
+        <CreateTileModal
+          createWorkoutTile={createWorkoutTile}
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+        />
+
         <HeadText headText={headText} />
-        <Pressable style={[styles.button, { opacity: modalVisible ? 0.2 : 1 }]} onPress={() => setModalVisible(true)}>
-          <Text>Create</Text>
-        </Pressable>
 
-        <List navigation={navigation} />
+        <Button title="Delete all" onPress={deleteAll} />
 
-        {/* <WorkoutTile id="1" title="Плечи" lastTimeDate="21.02.2022" navigate={navigation.navigate} colorId="1" /> */}
+        <List tiles={tiles} navigation={navigation} />
       </ScrollView>
+      <Pressable style={[styles.button, { opacity: modalVisible ? 0.2 : 1 }]} onPress={() => setModalVisible(true)}>
+        <Text style={{ fontSize: 36, color: "#FFF" }}>+</Text>
+      </Pressable>
     </View>
   );
 }
@@ -61,46 +81,21 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "column",
-    // backgroundColor: "#F0E6EF",
-
     alignItems: "center",
     minHeight: "100%",
   },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
   button: {
-    borderRadius: 20,
+    position: "absolute",
+    left: "80%",
+    top: "90%",
+    width: 70,
+    height: 70,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 40,
     padding: 10,
     elevation: 2,
-    backgroundColor: "#FFF",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
+    backgroundColor: "#DC5C65",
   },
 });
 

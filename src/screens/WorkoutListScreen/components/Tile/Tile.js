@@ -1,26 +1,29 @@
-import { StyleSheet, Text, View, Button, TouchableHighlight, TouchableOpacity } from "react-native";
-import { colorsCommon, screenNames, stylesCommon } from "../../../../common/common";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { colorsCommon, screenNames, stylesCommon, fromStringDateToDMY } from "../../../../common/common";
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function Tile(props) {
-  console.log(props.navigate);
+  const { navigate, title, lastTimeDate, colorId, id } = props;
+
   return (
     <TouchableOpacity
       onPress={() => {
-        props.navigate(screenNames.Workout, { title: props.title, lastTimeDate: props.lastTimeDate });
+        navigate(screenNames.Workout, { title: title, lastTimeDate: lastTimeDate });
       }}
     >
       <LinearGradient
         // Background Linear Gradient
-        colors={[colorsCommon[props.colorId], "#FFF"]}
+        colors={colorsCommon[colorId]}
         style={styles.container}
         end={{ x: 1, y: 0 }}
       >
         <View style={styles.colContainer}>
           <Text numberOfLines={1} style={[stylesCommon.font500, styles.title]}>
-            {props.title}
+            {title}
           </Text>
-          <Text style={[stylesCommon.font500, styles.paragraph]}>Last time trained: {props.lastTimeDate}</Text>
+          <Text style={[stylesCommon.font500, styles.paragraph]}>
+            Last time trained: {fromStringDateToDMY(lastTimeDate)}
+          </Text>
         </View>
       </LinearGradient>
     </TouchableOpacity>
@@ -37,7 +40,7 @@ const styles = StyleSheet.create({
     minWidth: "90%",
     minHeight: 131,
     marginBottom: 25,
-    borderRadius: 10,
+    borderRadius: 33,
     backgroundColor: "transparent",
     padding: 12,
   },

@@ -1,10 +1,15 @@
 import { StyleSheet } from "react-native";
 
-export const colorsCommon = {
-  1: "#F27B55",
-  2: "#F4A68F",
-  3: "#FE8497",
-  4: "#FDEDCD",
+export const colorsCommon = [
+  ["#F27B55", "#FFB68C"],
+  ["#FFB385", "#FFD18A"],
+  ["#FFD085", "#FDEDCD"],
+  ["#FDEDCD", "#FDD3D7"],
+];
+
+export const fromStringDateToDMY = (date) => {
+  const newDate = new Date(date);
+  return `${newDate.getDate()}.${newDate.getMonth() + 1}.${newDate.getFullYear()}`;
 };
 
 export const screenNames = { WorkoutList: "Workout List", Workout: "Workout" };
